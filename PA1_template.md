@@ -59,14 +59,14 @@ s$Day <- as.Date(cut(s$date,
                      breaks = "day"))
 
 ggplot(data = s,
-      aes(Day, sum)) +geom_bar(stat = "identity") + ylab("Total steps per day")
+      aes(Day, sum)) +geom_bar(stat = "identity") + ylab("Total steps per day")+ggtitle("Total steps per day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 ```r
 ggplot(data = s,
-      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")
+      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")+ggtitle("Mean step per day")
 ```
 
 ```
@@ -77,7 +77,7 @@ ggplot(data = s,
 
 ```r
 ggplot(data = s,
-      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")
+      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")+ggtitle("Median step per day")
 ```
 
 ```
@@ -93,7 +93,7 @@ ggplot(data = s,
 
 ```r
 s2 <- d %>% group_by(interval) %>% summarize( mean = mean(steps, na.rm = TRUE))
-with(s2, plot(interval, mean, type= "l"))
+with(s2, plot(interval, mean, type= "l", main = "Average step taken"))
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
@@ -153,14 +153,14 @@ s3$Day <- as.Date(cut(s3$date,
                      breaks = "day"))
 
 ggplot(data = s3,
-       aes(Day, sum)) +geom_bar(stat = "identity")+ylab("Total steps per day")
+       aes(Day, sum)) +geom_bar(stat = "identity")+ylab("Total steps per day")+ggtitle("Total steps per day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 ggplot(data = s,
-      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")
+      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")+ggtitle("Mean step per day")
 ```
 
 ```
@@ -171,7 +171,7 @@ ggplot(data = s,
 
 ```r
 ggplot(data = s,
-      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")
+      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")+ggtitle("Median step per day")
 ```
 
 ```
@@ -190,7 +190,7 @@ The difference between original steps taken in each day and the steps after impu
 ```r
 s3$diff <- s3$sum - s$sum
 ggplot(data = s3,
-       aes(Day, diff)) +geom_bar(stat = "identity")+ ylab("Total different steps per day after imputing")
+       aes(Day, diff)) +geom_bar(stat = "identity")+ ylab("Total different steps per day after imputing")+ggtitle("Difference in steps per day after imputing")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
@@ -217,11 +217,29 @@ d1$daytype <-  factor((weekdays(d1$date) %in% weekdays1),
 s4 <- d1 %>% group_by(interval, daytype) %>% summarize( mean = mean(newsteps, na.rm = TRUE))
 
 
-p <- ggplot(s4, aes(x = interval, y = mean)) + geom_line() +ylab ("Number of steps")
+p <- ggplot(s4, aes(x = interval, y = mean)) + geom_line() +ylab ("Number of steps")+ggtitle("Total steps per day compared for weekdays and weekend")
 p + facet_grid( daytype ~ .)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+```r
+dev.copy(png, file = "weekend_weekday.png") 
+```
+
+```
+## png 
+##   3
+```
+
+```r
+dev.off() 
+```
+
+```
+## png 
+##   2
+```
 
 
 From the comparison of the number of steps taken in the weekday and weenkend, a remarkable difference is in more steps are taken during weekend between the intervals 1000 and 2000. But the steps taken are more in weekedays between the intervals 500 and 1000. 

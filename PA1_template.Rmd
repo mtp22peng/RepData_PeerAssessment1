@@ -33,14 +33,14 @@ s$Day <- as.Date(cut(s$date,
                      breaks = "day"))
 
 ggplot(data = s,
-      aes(Day, sum)) +geom_bar(stat = "identity") + ylab("Total steps per day")
+      aes(Day, sum)) +geom_bar(stat = "identity") + ylab("Total steps per day")+ggtitle("Total steps per day")
 
 
 ggplot(data = s,
-      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")
+      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")+ggtitle("Mean step per day")
 
 ggplot(data = s,
-      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")
+      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")+ggtitle("Median step per day")
 
 
 ```
@@ -51,7 +51,7 @@ ggplot(data = s,
 
 ```{r, echo=TRUE}
 s2 <- d %>% group_by(interval) %>% summarize( mean = mean(steps, na.rm = TRUE))
-with(s2, plot(interval, mean, type= "l"))
+with(s2, plot(interval, mean, type= "l", main = "Average step taken"))
 ```
 
 The 5-minute interval, on average across all the days in the dataset, containing the maximum number of steps is:
@@ -99,14 +99,14 @@ s3$Day <- as.Date(cut(s3$date,
                      breaks = "day"))
 
 ggplot(data = s3,
-       aes(Day, sum)) +geom_bar(stat = "identity")+ylab("Total steps per day")
+       aes(Day, sum)) +geom_bar(stat = "identity")+ylab("Total steps per day")+ggtitle("Total steps per day")
 
 
 ggplot(data = s,
-      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")
+      aes(Day, mean)) +geom_bar(stat = "identity") + ylab("Mean step per day")+ggtitle("Mean step per day")
 
 ggplot(data = s,
-      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")
+      aes(Day, median)) +geom_bar(stat = "identity") + ylab("Median step per day")+ggtitle("Median step per day")
 
 ```
 
@@ -120,7 +120,7 @@ The difference between original steps taken in each day and the steps after impu
 
 s3$diff <- s3$sum - s$sum
 ggplot(data = s3,
-       aes(Day, diff)) +geom_bar(stat = "identity")+ ylab("Total different steps per day after imputing")
+       aes(Day, diff)) +geom_bar(stat = "identity")+ ylab("Total different steps per day after imputing")+ggtitle("Difference in steps per day after imputing")
 
 ```
 
@@ -138,9 +138,11 @@ d1$daytype <-  factor((weekdays(d1$date) %in% weekdays1),
 s4 <- d1 %>% group_by(interval, daytype) %>% summarize( mean = mean(newsteps, na.rm = TRUE))
 
 
-p <- ggplot(s4, aes(x = interval, y = mean)) + geom_line() +ylab ("Number of steps")
+p <- ggplot(s4, aes(x = interval, y = mean)) + geom_line() +ylab ("Number of steps")+ggtitle("Total steps per day compared for weekdays and weekend")
 p + facet_grid( daytype ~ .)
 
+dev.copy(png, file = "weekend_weekday.png") 
+dev.off() 
 
 ```
 
